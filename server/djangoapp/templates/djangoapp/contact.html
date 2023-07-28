@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Car Dealership</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .contact-section h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            border: 1px solid #ccc;
+            padding: 30px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-group textarea {
+            resize: none;
+        }
+
+        .form-group button {
+            margin-top: 10px;
+        }
+
+        .alert {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="contact-section">
+            <h1>Contact Us - Car Dealership</h1>
+            <div class="contact-info">
+                <p><strong>Address:</strong> 123 Main Street, City, State, Zip Code</p>
+                <p><strong>Telephone:</strong> +1 (123) 456-7890</p>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div class="alert alert-success" id="successMessage" role="alert">
+                    Your message has been sent successfully.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} <!-- Bootstrap JS and jQuery (optional) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function () {
+            // Submit the contact form via AJAX
+            $("#contactForm").submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "process_contact_form.php", // Replace with the URL to your backend processing script
+                    data: $(this).serialize(),
+                    success: function () {
+                        $("#successMessage").slideDown();
+                        $("#contactForm")[0].reset();
+                    },
+                    error: function () {
+                        alert("Error sending the message. Please try again later.");
+                    }
+                });
+            });
+        });
+    </script> {% endcomment %}
+</body>
+
+</html>
