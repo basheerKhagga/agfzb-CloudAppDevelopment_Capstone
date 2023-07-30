@@ -17,12 +17,15 @@ urlpatterns = [
 
 
     # path for registration
+    path(route='signup/', view=views.registration_request, name='registration'),
 
     # path for login
+    path(route='login/', view=views.login_request, name='login'),
 
     # path for logout
+    path(route='logout/', view=views.logout_request, name='logout'),
 
-    path(route='index/', view=views.get_dealerships, name='index'),
+    path(route='', view=views.get_dealerships, name='index'),
 
     # path for dealer reviews view
 
