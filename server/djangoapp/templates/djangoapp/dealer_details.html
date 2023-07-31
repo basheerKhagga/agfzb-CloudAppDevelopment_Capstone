@@ -7,12 +7,97 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-    <body>
+<body class="d-flex flex-column min-vh-100">
 
-    <!--Add a nav bar here -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'djangoapp:about' %}">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto"> <!-- Use ml-auto to align the login form to the right -->
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id%}">Add review</a>
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username">
+                                <input type="password" class="form-control" placeholder="Password" name="psw">
+                                <button class="btn btn-primary" type="submit">Login</button>
+                                <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
 
-    <!-- Add reviews as cards -->
 
-    </body>
+    <h3>Reviews for <b>{{dealer.full_name}}</b></h3>
+
+   <div class="container">
+       <div class="card-columns">
+           {% for review in reviews %}
+           <div class="col-auto mb-3">
+               <div class="card">
+                   {% if review.sentiment == "positive" %}
+                       <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" width="36px" height="36px"
+                            alt="Sentiment">
+                   {% elif review.sentiment == "negative" %}
+                       <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" width="36px" height="36px"
+                                  alt="Sentiment">
+                       {% else %}
+                       <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" width="36px" height="36px"
+                                  alt="Sentiment">
+                   {% endif %}
+                   <div class="card-body bg-light">
+                             {% if review.car_make%}
+                                 <h5 class="card-title">{{review.car_make}}, {{review.car_model}} </h5>
+                                 <h5 class="card-title">{{review.car_year}}</h5>
+                              {% endif %}
+                             <p class="card-text">{{review.review}}</p>
+                   </div>
+               </div>
+           </div>
+           {% endfor %}
+       </div>
+   </div>
+</div>
+
+
+
+<footer class="py-3 my-4 mt-auto">
+  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+  </ul>
+  <p class="text-center text-body-secondary">© 2023 Company, Inc</p>
+</footer>
+
+</body>
 
 </html>
